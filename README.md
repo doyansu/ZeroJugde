@@ -1,2 +1,2 @@
-# zerojugde-c
+# zerojugde
 solving problem on zerojugdec by code 
