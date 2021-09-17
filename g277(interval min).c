@@ -1,3 +1,11 @@
+/*
+https://web.ntnu.edu.tw/~algo/Sequence2.html#6
+
+Sparse Table
+
+搭配前綴和找到幸運數字
+*/
+
 #include <stdio.h>//AC (29ms, 24.4MB)
 #include <math.h>
 #define SIZE 300001
