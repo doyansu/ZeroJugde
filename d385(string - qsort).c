@@ -1,3 +1,8 @@
+/*
+用 qsort 對數字進行排序
+*** cmp 函數比較方式為 a , b 長度相同則直接進行比較, 不同則串接成 ab , ba 在進行比較 ***
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
