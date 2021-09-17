@@ -1,3 +1,13 @@
+/*
+sscanf 可從字串中讀取
+第一個參數 (char *) 為要讀取的字串開頭指標 
+第二個參數 "%d %s ... " 為讀取格式與 scanf 相同
+第三個參數 (void *) 為讀取結果要存在的變數 (該變數之位置)
+
+先讀取整行
+再利用 sscanf (用一個 (int index) 來控制開頭位置) 讀取運算子、運算元進行運算
+*/
+
 #include <stdio.h>//	AC (30ms, 88KB)
 #include <string.h>
 
