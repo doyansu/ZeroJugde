@@ -1,3 +1,9 @@
+/*
+https://web.ntnu.edu.tw/~algo/KnapsackProblem.html
+01背包問題
+用在背包容量較小的情況
+*/
+
 #include <stdio.h>
 #define BPackSIZE 100
 #define ItemSIZE 10001
