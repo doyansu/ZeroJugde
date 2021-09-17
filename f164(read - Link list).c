@@ -1,3 +1,17 @@
+/*
+struct node_s 
+left :左邊的數字
+right :右邊的數字
+
+建立一個 list[] 元素為 node_t
+
+i = 0 ~ n - 1 代表節點編號
+list[i].left = i - 1
+list[i].right = i + 1
+
+
+再依題目敘述刪除 a 再將 a 插入 b 旁邊*/
+
 #include <stdio.h>//AC (3ms, 3.9MB)
 #include <stdlib.h>
 #define SIZE 500001
