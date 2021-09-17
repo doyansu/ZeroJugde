@@ -1,3 +1,34 @@
+/*
+typedef struct Devil_s{
+    int x, y, s, t;
+    char survive;
+}Devil_t;
+
+x , y   為該魔王目前位置
+s , t   為每回合成長
+survive 為該魔王是否還在 map 上 '1' 代表存在 '0' 代表消失
+
+流程:
+
+初始化 map [n*m] = ' '  
+
+number 儲存輸入魔王資料的陣列
+
+sur = 剩餘魔王數 bomb = 紀錄炸彈數
+
+-> //move
+
+如果沒有炸彈則魔王放下炸彈(bomb++)並移動，移動完成後判斷是否出邊界，出邊界則該魔王消失(survive = '0' sur--)
+
+-> //clearDevil
+
+如果魔王碰到炸彈則設 survive = '-' (為暫時狀態為了清除炸彈使用代表該魔王這回合會消失)
+
+-> //clearbomb
+
+如果魔王這回合會消失清除該位置炸彈並且魔王消失(survive = '0' sur--)
+*/
+
 #include <stdio.h>
 #define mapSIZE 100
 #define devulSIZE 500
@@ -54,16 +85,6 @@ static inline void solve(){
         }
     }
     printf("%d\n", bomb);
-    /*bomb = 0;
-    for(int i = 0; i < n; i++){
-        puts(map[i]);
-        for(int j = 0; j < m; j++)
-            if(map[i][j] == '*')bomb++;
-    }
-
-
-
-    printf("%d", bomb);*/
 }
 
 int main(){
