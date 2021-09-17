@@ -1,4 +1,59 @@
-#include <stdio.h>
+#include <stdio.h>//AC (2.6s, 114.5MB)
+#define MAXINPUT 10000010
+#define MAXINF 0x7fffffff
+
+typedef struct node_s{
+    int left, right;
+}node_t;
+
+static inline void reisei(int *p, int n, unsigned int a, unsigned int c, unsigned int m){
+    for(int i=1; i<=n; i++) p[i] = i;
+    unsigned int x = 0;
+    for(int i=1; i<=n-1; i++){
+        x = ((unsigned long long)a*x+c)%m;
+        int j = i + x%(n-i+1);
+        int t = p[i];
+        p[i] = p[j];
+        p[j] = t;
+    }
+}
+
+int min(int a, int b){
+    return a < b ? a : b;
+}
+
+int pi[MAXINPUT];
+node_t list[MAXINPUT];
+
+void solve(){
+    int n;
+    unsigned int a, c, m;
+    while(scanf("%d", &n) == 1){
+        scanf("%u%u%u", &a, &c, &m);
+        reisei(pi, n, a, c, m);
+        for(int i = 1; i <= n; i++){
+            list[i].left = i - 1;
+            list[i].right = i + 1;
+        }
+        list[1].left = -MAXINF + 10;
+        list[n].right = MAXINF;
+        int ans = 0;
+        for(int i = n; i > 1; i--){
+            int deleteNode = pi[i], left = list[deleteNode].left, right = list[deleteNode].right;
+            ans ^= (i + min(deleteNode - left, right - deleteNode));
+            if(left > 0)list[left].right = right;
+            if(right < n + 1)list[right].left = left;
+        }
+        printf("%d\n", ans);
+    }
+}
+
+int main(){
+    solve();
+    return 0;
+}
+
+/*#include <stdio.h>
 #include <stdlib.h>
 #define SIZE 10000100
 #define MAXINF 0x7fffffff
@@ -75,10 +130,6 @@ int main(){
         nodep_t origin;
         nodep_t end;
         createList(&origin,&end,n);
-        /*while(origin!=NULL){
-            printf("%d ",origin->data);
-            origin=origin->right;
-        }*/
         int ans=0;
         for(int i=n;i>1;--i){
             nodep_t pointer;
@@ -99,7 +150,7 @@ int main(){
         printf("%d\n",ans);
     }
 }
-
+*/
 /*#include <stdio.h>
 #include <stdlib.h>
 #define SIZE 10000100
