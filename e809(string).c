@@ -1,3 +1,17 @@
+/*
+利用 counting sort
+
+cmp 紀錄排序順序 (cmp[0]為最先, cmp[1]為第2 ...)
+input 儲存輸入字串
+count 儲存字母出現次數 (count[0] = 'A'出現次數, count[1] = 'B'出現次數 ...)
+p 為指標方便尋訪字元陣列
+
+輸入字串，
+然後 尋訪input 字母每出現對應的 count[n] 就 + 1 計算次數，
+然後 輸入目標位置 index 後用迴圈從 cmp[0](最先) 開始 index 減掉 cmp[n] 的出現次數(count[cmp[n] - 'A'])
+直到 index < 0 代表超過 index
+輸出前一個字母 *(cmp[n] - 1) */
+
 #include <stdio.h>
 #define SIZE 500002//5000002
 
