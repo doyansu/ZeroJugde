@@ -1,3 +1,11 @@
+/*
+用 fread 輸入進 buf 暫存 readChar() 拿取一個字元
+先跳過第1個輸入的整數(即到第一個空白)
+然後開始將字元一個一個讀將第2個輸入的整數存到輸出陣列(out) outp > end 就先輸出
+然後利用 rewind(stdin) 將 stdin 回到開頭
+再重複讀取到 ' ' 結束最後輸出
+*/
+
 #include <stdio.h>
 #define BUFSIZE 65536
 
