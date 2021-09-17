@@ -1,3 +1,9 @@
+/*
+https://zh.wikipedia.org/wiki/%E5%9F%83%E6%8B%89%E6%89%98%E6%96%AF%E7%89%B9%E5%B0%BC%E7%AD%9B%E6%B3%95
+利用埃式篩法 找出小於 10000000 的質數 並儲存成一個 list
+再用二元搜索法找到再質數位於 list 的索引值
+*/
+
 #include <stdio.h>//AC (55ms, 12.2MB)
 #define SIZE 664579
 #define MAX 10000000
