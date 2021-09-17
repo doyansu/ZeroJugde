@@ -1,3 +1,9 @@
+/*
+https://zh.wikipedia.org/wiki/%E5%8E%BB%E4%B9%9D%E6%B3%95
+
+ABC≡A+B+C (mod9)
+*/
+
 #include <stdio.h>
 
 int main(){
