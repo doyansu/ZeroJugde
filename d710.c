@@ -1,3 +1,9 @@
+/*
+建立一個 struct car_s 內容有廠牌跟顏色
+輸入資料建成一個清單
+輸入要檢索的類別並逐一尋訪清單符合就輸出
+*/
+
 #include <stdio.h>
 #include <string.h>
 #define SIZE 50
