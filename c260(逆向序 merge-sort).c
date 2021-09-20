@@ -1,5 +1,6 @@
 /*
-�f�ǹ� merge sort
+https://emiliatancoding.blogspot.com/2020/02/c260.html
+逆向序對, merge sort, 排容原理(A&B = A + B - A|B)
 */
 
 #include <stdio.h>// 	AC (24ms, 3.1MB)
