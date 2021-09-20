@@ -1,3 +1,7 @@
+/*
+逆序數對、merge sort
+*/
+
 #include <stdio.h>//	AC (0.1s, 3.8MB)
 #include <stdlib.h>
 #define MAXINPUTSIZE 500001
