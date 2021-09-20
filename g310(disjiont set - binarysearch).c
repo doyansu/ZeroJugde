@@ -65,6 +65,53 @@ int main(){
     return 0;
 }
 
+/*
+#include <stdio.h>//	AC (0.2s, 7.2MB)
+#define MAXINPUT 1000000
+
+int donutx[MAXINPUT];
+int visited[MAXINPUT] = {0};
+
+int binarySearch(int target, int left, int right){
+    if(left > right)
+        return right;
+    int mid = (left + right) >> 1;
+    if(donutx[mid] == target)
+        return mid - 1;
+    else if(donutx[mid] > target)
+        return binarySearch(target, left, mid - 1);
+    else
+        return binarySearch(target, mid + 1, right);
+}
+
+int getMin(int index){
+    if(index < 0)
+        return -1;
+    return index == visited[index] ? visited[index]-- : (visited[index] = getMin(visited[index]));
+}
+
+static inline void solve(){
+    int n, ans = 0;
+    scanf("%d", &n);
+    for(int i = 0; i < n; i++){
+        scanf("%d", donutx + i);
+        visited[i] = i;
+    }
+    for(int i = 0, index; i < n; i++){
+        scanf("%d", &index);
+        index = getMin(binarySearch(index, 0, n - 1));
+        if(index >= 0)
+            ans++;
+    }
+    printf("%d\n", ans);
+}
+
+int main(){
+    solve();
+    return 0;
+}
+*/
+
 /*#include <stdio.h>//	NA (score:95%)
 #define MAXINPUT 1000001
 #define BUFSIZE 1048576
