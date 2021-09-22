@@ -1,4 +1,4 @@
-#include <stdio.h>//	AC (0.6s, 244KB)
+#include <stdio.h>//	AC (0.4s, 260KB)
 #include <stdlib.h>
 #define MAXMOD 200
 
