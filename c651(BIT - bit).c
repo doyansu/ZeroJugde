@@ -1,9 +1,9 @@
-#include <stdio.h>//AC (0.4s, 8.7MB)
+#include <stdio.h>//AC (0.3s, 4.9MB)
 #define MAXSIZE 1000001
 #define BUFSIZE 1048576
 
 int n, q;
-int array[MAXSIZE] = {0}, BIT[MAXSIZE] = {0};
+int BIT[MAXSIZE] = {0};
 
 static inline char readChar(){
     static char buf[BUFSIZE], *p = buf + BUFSIZE, *end = buf + BUFSIZE;
@@ -46,9 +46,7 @@ static inline int query(int left, int right){
 }
 
 static inline void update(int x, int v){
-    int temp = v;
-    v ^= array[x];
-    array[x] = temp;
+    v ^= query(x, x);
     for(int i = x; i <= n; i += lowbit(i))
         BIT[i] ^= v;
 }
@@ -76,10 +74,9 @@ static inline void operate(){
 int main(){
     readUint(&n);
     readUint(&q);
-    *BIT = 0;
     for(int i = 1; i <= n; i++){
-        readUint(array + i);
-        BIT[i] = BIT[i - 1] ^ array[i];
+        readUint(BIT + i);
+        BIT[i] ^= BIT[i - 1];
     }
     initialBIT();
     operate();
