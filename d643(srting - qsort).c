@@ -10,7 +10,8 @@ int cmp(const char **a, const char **b){
 int cmpstr(char *input, char* list[SIZE], int size, int factor){
     for(int i = 0; i < size; i++)
         for(int j = 0; j < factor; j++)
-            if(*input++ != list[i][j])return 1;
+            if(*input++ != list[i][j])
+                return 1;
     return 0;
 }
 
@@ -18,13 +19,15 @@ int main(){
     char input[SIZE], *jugde = 0;
     gets(input);
     int len = strlen(input);
-    for(int factor = 1, maxFactor = (len / 2); factor <= maxFactor; factor++){
+    for(int factor = 1, maxFactor = len >> 1; factor <= maxFactor; factor++){
         if(!(len % factor)){
             int listSize = len / factor;
             char* list[SIZE];
             for(int i = 0; i < listSize; i++)
                 list[i] = &input[i * factor];
+
             qsort(list, listSize, sizeof(char *), cmp);
+
             if(cmpstr(input, list, listSize, factor)){
                 char out[SIZE];
                 jugde = out;
@@ -35,7 +38,8 @@ int main(){
             }
         }
     }
-    if(!jugde)puts("bomb!");
+    if(!jugde)
+        puts("bomb!");
 }
 
 /*#include <stdio.h>
