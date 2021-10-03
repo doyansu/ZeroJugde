@@ -26,7 +26,7 @@ static inline hashp_t createNewNode(unsigned int key, char *src){
 static inline unsigned int getKey(char *src){// BKDR
     unsigned int key = 0;
     while(*src)
-        key = 31 * key + (*src++);
+        key = 31 * key + (*src++);// 31, 131, 1313, 13131, 131313 ...
     return key & MAXINF;
 }
 
