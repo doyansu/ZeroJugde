@@ -1,7 +1,7 @@
-#include <stdio.h>// AC (0.3s, 660KB)
+#include <stdio.h>//	AC (0.1s, 864KB)
 #include <string.h>
 #include <stdlib.h>
-#define HASHSIZE 104
+#define HASHSIZE 13131
 #define STRSIZE 30
 #define MAXINF 0x7fffffff
 
@@ -27,7 +27,7 @@ static inline hashp_t createNewNode(unsigned int key, char *src, unsigned int co
 static inline unsigned int getKey(char *src){// BKDR
     unsigned int key = 0;
     while(*src)
-        key = 131 * key + (*src++);
+        key = 31 * key + (*src++);
     return key & MAXINF;
 }
 
