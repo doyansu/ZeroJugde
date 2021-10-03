@@ -1,4 +1,173 @@
-#include <stdio.h>//AC 0.3S
+#include <stdio.h>//	AC (0.3s, 100KB)
+#include <stdlib.h>
+#define SIZE 31
+
+int m, n, next, path[SIZE], data[SIZE];
+char ansjugde;
+
+
+int cmp(const int *a, const int *b){
+    return *a - *b;
+}
+
+static inline void DFS(int start, int level, int ans){
+    for(int i = start; i < n; i++){
+        next = ans + data[i];
+        if(next > m)
+            return;
+        if(next == m){
+            for(int j = 0; j < level; j++)
+                printf("%d ", path[j]);
+            printf("%d\n", data[i]);
+            ansjugde = 0;
+        }
+        path[level] = data[i];
+        if(next + data[i] <= m)
+            DFS(i + 1, level + 1, next);
+    }
+}
+
+int main(){
+    while(scanf("%d%d",&n ,&m) == 2){
+        ansjugde = 1;
+        for(int i = 0; i < n; i++)
+            scanf("%d", data + i);
+        qsort(data, n, sizeof(int), cmp);
+        DFS(0, 0, 0);
+        if(ansjugde)
+            puts("-1");
+    }
+    return 0;
+}
+
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 31
+
+int m, n, next, path[SIZE], data[SIZE];
+char ansjugde;
+
+
+int cmp(const int *a, const int *b){
+    return *a - *b;
+}
+
+static inline void DFS(int start, int level, int ans){
+    for(int i = start; i < n; i++){
+        next = ans + data[i];
+        if(next >= m){
+            if(next == m){
+                for(int i = 0; i < level; i++)
+                    printf("%d ", path[i]);
+                printf("%d\n", data[i]);
+                ansjugde = 0;
+            }
+            else
+                return;
+        }
+        path[level] = data[i];
+        if(next + data[i] <= m)
+            DFS(i + 1, level + 1, next);
+    }
+}
+
+int main(){
+    while(scanf("%d%d",&n ,&m) == 2){
+        ansjugde = 1;
+        for(int i = 0; i < n; i++)
+            scanf("%d", data + i);
+        qsort(data, n, sizeof(int), cmp);
+        DFS(0, 0, 0);
+        if(ansjugde)
+            puts("-1");
+    }
+    return 0;
+}
+*/
+
+/*#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 31
+
+int m, n, path[SIZE], data[SIZE];
+char ansjugde;
+
+
+int cmp(const int *a,const int *b){
+    return *a - *b;
+}
+
+static inline void DFS(int start, int level, int ans){
+    if(ans == m){
+        ansjugde = 0;
+        for(int i = 0; i < level; i++)
+            printf("%d ", path[i]);
+        putchar('\n');
+        return;
+    }
+    for(int i = start; i < n; i++){
+        path[level] = data[i];
+        if(ans + data[i] <= m)
+            DFS(i + 1, level + 1, ans + data[i]);
+        else
+            return;
+    }
+}
+
+int main(){
+    while(scanf("%d%d",&n ,&m) == 2){
+        ansjugde = 1;
+        for(int i = 0; i < n; i++)
+            scanf("%d", data + i);
+        qsort(data, n, sizeof(int), cmp);
+        DFS(0, 0, 0);
+        if(ansjugde)
+            puts("-1");
+    }
+    return 0;
+}
+*/
+/*#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 31
+
+int m, n, path[SIZE], data[SIZE];
+char ansjugde = 1;
+
+
+static inline int cmp(const int *a,const int *b){
+    return *a - *b;
+}
+
+static inline void DFS(int start, int level, int ans){
+    if(ans > m)
+        return;
+    if(ans == m){
+        for(int i = 0; i < level; i++)
+            printf("%d ", path[i]);
+        putchar('\n');
+        ansjugde = 0;
+        return;
+    }
+    for(int i = start; i < n; i++){
+        path[level] = data[i];
+        DFS(i + 1, level + 1, ans + data[i]);
+    }
+}
+
+int main(){
+    scanf("%d%d",&n ,&m);
+    for(int i = 0; i < n; i++)
+        scanf("%d", data + i);
+    qsort(data, n, sizeof(int), cmp);
+    DFS(0, 0, 0);
+    if(ansjugde)
+        puts("-1");
+    return 0;
+}*/
+
+/*#include <stdio.h>//AC 0.3S
 #include <stdlib.h>
 #define SIZE 35
 
@@ -62,7 +231,7 @@ int main()
     qsort(arr,n,sizeof(int),comp);
     search_seq();
 
-}
+}*/
 
 
 /*#include <stdio.h> //AC 1.9S
