@@ -1,6 +1,69 @@
 #include <stdio.h>
 #define SIZE 100
 
+static inline char* mysplit(char* s, char ch){
+    int temp = 0;
+    while(*s){
+        if(*s == '(')++temp;
+        else if(*s == ')')--temp;
+        if(temp == 0 && *s == ch){
+            *s = '\0';
+            return s + 1;
+        }
+        s++;
+    }
+    return NULL;
+}
+
+static inline int checkIsNumber(char* s){
+    while(*s){
+        if(*s > '9' || *s < '0')
+            return 0;
+        s++;
+    }
+    return 1;
+}
+
+static inline int turnToInt(char* s){
+    int n = 0;
+    while(*s)
+        n = (n << 3) + (n << 1) + ('0' ^ *s++);
+    return n;
+}
+
+static inline int solve(char *string){
+    char *temp;
+    if(checkIsNumber(string))return turnToInt(string);
+    if(temp = mysplit(string, '+'))return solve(string) + solve(temp);
+    if(temp = mysplit(string, '-'))return solve(string) - solve(temp);
+    if(temp = mysplit(string, '*'))return solve(string) * solve(temp);
+    if(temp = mysplit(string, '/'))return solve(string) / solve(temp);
+    if(temp = mysplit(string, '%'))return solve(string) % solve(temp);
+    if(*string == '('){
+        mysplit(string, ')');
+        *string = '\0';
+        return solve(string + 1);
+    }
+}
+
+int main(){
+    int n;
+    char s[SIZE], ch, *p;
+    while(scanf("%c", &ch) == 1){
+        p = s;
+        while(ch != '\n'){
+            if(ch != ' ')
+                *p++ = ch;
+            scanf("%c", &ch);
+        }
+        *p = '\0';
+        printf("%d\n",solve(s));
+    }
+}
+
+/*#include <stdio.h>
+#define SIZE 100
+
 char* mysplit(char* s,char ch){
     int temp=0;
     while(*s!='\0'){
@@ -55,14 +118,13 @@ int main(){
         int index=0;
         while(ch!='\n'){
             if(ch!=' ')s[index++]=ch;
-            scanf("%c",&ch);
+            scanf("%c", &ch);
         }
         s[index]='\0';
         printf("%d\n",solve(s));
     }
 }
-
-
+*/
 
 /*#include <stdio.h>
 #include <string.h>
