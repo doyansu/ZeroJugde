@@ -1,6 +1,6 @@
 #include <stdio.h>
 #define SIZE 4800
-#define MAXPRIME 46350
+#define MAXPRIME 46340
 
 int len = 0, prime[SIZE];
 char isnotprime[MAXPRIME] = {1, 1};
@@ -21,12 +21,14 @@ static inline char isprime(int n){
 
 int main(){
     int n, temp = 2;
-    while(temp < MAXPRIME){
-        prime[len++] = temp;
+    while(temp < 220){
         for(int i = temp << 1; i < MAXPRIME; i += temp)
             isnotprime[i] = 1;
         while(isnotprime[++temp]);
     }
+    for(int i = 2; i < MAXPRIME; i++)
+        if(isnotprime[i] == 0)
+            prime[len++] = i;
     while(scanf("%d", &n) == 1){
         if(isprime(n))
             puts("½è¼Æ");
