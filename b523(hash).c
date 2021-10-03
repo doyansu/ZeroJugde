@@ -25,7 +25,7 @@ static inline hashp_t createNewNode(int key, char *src){
 static inline int getKey(char *src){
     int key = 0;
     while(*src)
-        key += *src--;
+        key += *src++;
     return key;
 }
 
