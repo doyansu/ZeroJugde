@@ -1,5 +1,43 @@
 #include <stdio.h>
 #define SIZE 4800
+#define MAXPRIME 46350
+
+int len = 0, prime[SIZE];
+char isnotprime[MAXPRIME] = {1, 1};
+
+static inline char isprime(int n){
+    if(n < MAXPRIME)
+        return !isnotprime[n];
+    else {
+        for(int i = 0; i < len; i++){
+            if(n < prime[i] * prime[i])
+                break;
+            if(n % prime[i] == 0)
+                return 0;
+        }
+    }
+    return 1;
+}
+
+int main(){
+    int n, temp = 2;
+    while(temp < MAXPRIME){
+        prime[len++] = temp;
+        for(int i = temp << 1; i < MAXPRIME; i += temp)
+            isnotprime[i] = 1;
+        while(isnotprime[++temp]);
+    }
+    while(scanf("%d", &n) == 1){
+        if(isprime(n))
+            puts("質數");
+        else
+            puts("非質數");
+    }
+    return 0;
+}
+
+/*#include <stdio.h>
+#define SIZE 4800
 #define MOST 46350
 
 int isprime(int list[SIZE],int index,int n){
@@ -22,5 +60,5 @@ int main(){
     }
     return 0;
 }
-
+*/
 
