@@ -30,7 +30,7 @@ matrix_t matrixMul(matrix_t a, matrix_t b){
     return temp;
 }
 
-void getAns(int power){
+void matrixFastExponentiation(int power){
     matrix_t ans = initial, base = pb;
     while(power){
         if(power & 1)
@@ -50,7 +50,7 @@ int main(){
         else if(n == 4)
             puts("3");
         else
-            getAns(n - 5);
+            matrixFastExponentiation(n - 5);
     }
     return 0;
 }
