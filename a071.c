@@ -3,13 +3,13 @@
 #define MAXINF 0x7fffffff
 
 typedef struct memory_s{
-    int address, size, timeLeft;
+    int address, size, timeLeft;// 開始地址、記憶體大小、剩餘時間
     struct memory_s *next;
 }memory_t;
 
 typedef memory_t* memoryp_t;
 
-memoryp_t createNewMemory(int address, int size, int time){
+memoryp_t createNewMemory(int address, int size, int time){//配置新空間
     memoryp_t newMem = malloc(sizeof(memory_t));
     newMem->address = address;
     newMem->size = size;
@@ -18,7 +18,7 @@ memoryp_t createNewMemory(int address, int size, int time){
     return newMem;
 }
 
-static inline void freeMemory(memoryp_t mem, int time){
+static inline void freeMemory(memoryp_t mem, int time){// 經過 time 時間 如果程式執行結束釋放記憶體
     memoryp_t temp;
     while(mem && mem->next){
         if((mem->next->timeLeft -= time) < 0){
@@ -31,11 +31,11 @@ static inline void freeMemory(memoryp_t mem, int time){
     }
 }
 
-memoryp_t insertFormEnd(memoryp_t end, memoryp_t now){
+memoryp_t insertFormEnd(memoryp_t end, memoryp_t now){// queue insertFormTail
     return end->next = now;
 }
 
-static inline memoryp_t queryMemory(memoryp_t mem, memoryp_t now){
+static inline memoryp_t queryMemory(memoryp_t mem, memoryp_t now){// 搜索有無 now->size 大小的連續記憶體可用 迴傳要插入的開頭
     while(mem->size < MAXINF){
         if(mem->next->address - mem->address - mem->size >= now->size)
             return mem;
@@ -44,7 +44,7 @@ static inline memoryp_t queryMemory(memoryp_t mem, memoryp_t now){
     return NULL;
 }
 
-static inline void checkQueue(memoryp_t mem, memoryp_t queue) {
+static inline void checkQueue(memoryp_t mem, memoryp_t queue) {// 從queue開頭開始檢查有無多餘空間 有就從queue取出並插入memory
     memoryp_t inser, temp;
     if(queue->next && (inser = queryMemory(mem, queue->next))){
         temp = queue->next;
@@ -56,7 +56,7 @@ static inline void checkQueue(memoryp_t mem, memoryp_t queue) {
     }
 }
 
-static inline int searchMinTime(memoryp_t mem){
+static inline int searchMinTime(memoryp_t mem){// 找到memory 中最小的剩餘時間
     int min = MAXINF;
     while(mem->size < MAXINF){
         if(mem->timeLeft < min)
@@ -66,7 +66,7 @@ static inline int searchMinTime(memoryp_t mem){
     return min + 1;
 }
 
-void putmem(memoryp_t inser, int lastime){
+void putmem(memoryp_t inser, int lastime){// debug 用輸出檢視
     printf("\nmem time = %d\n", lastime);
     while(inser){
         printf("%d %d %d\n", inser->address, inser->size, inser->timeLeft);
@@ -80,35 +80,35 @@ int main() {
     scanf("%d", &m);
     memoryp_t memory = createNewMemory(0, 0, MAXINF), queue = createNewMemory(-1, -1, 0);
     memoryp_t queueEnd = queue, now, temp;
-    memory->next = createNewMemory(m, MAXINF, MAXINF);
+    memory->next = createNewMemory(m, MAXINF, MAXINF);// memory 結尾
 
     while(scanf("%d%d%d", &nowt, &m, &p) == 3 && (nowt || m || p)){
         now = createNewMemory(nowt, m, p - 1);
-        for(;lastime <= nowt; lastime++){
+        for(;lastime <= nowt; lastime++){// 到下一個請求前不斷釋放記憶體及檢查隊列是否可排入
             freeMemory(memory, 1);
             checkQueue(memory, queue);
             if(queue->next == NULL)
                 queueEnd = queue;
         }
-        if(temp = queryMemory(memory, now)){
+        if(temp = queryMemory(memory, now)){//請求空間成功 配置進memory
             now->address = temp->address + temp->size;
             now->next = temp->next;
             temp->next = now;
         }
-        else{
+        else{// 請求空間失敗 排入queue
             queueEnd = insertFormEnd(queueEnd, now);
             (queue->timeLeft)++;
         }
     }
 
     int min;
-    while(memory->next->size < MAXINF){
+    while(memory->next->size < MAXINF){// 所有請求結束後 執行剩餘程式
         freeMemory(memory, min = searchMinTime(memory));
         checkQueue(memory, queue);
         lastime += min;
     }
 
-    printf("%d\n%d\n", lastime - 1, queue->timeLeft);
+    printf("%d\n%d\n", lastime - 1, queue->timeLeft);// 輸出所花時間、排入隊列次數
 	return 0;
 }
 
