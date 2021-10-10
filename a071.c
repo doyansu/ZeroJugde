@@ -79,7 +79,7 @@ void putmem(memoryp_t inser, int lastime){// debug 用輸出檢視
 int main() {
     int nowt, m, p, lastime = 0;
     scanf("%d", &m);
-    memoryp_t memory = createNewMemory(0, 0, MAXINF), queue = createNewMemory(UNDEFINED, UNDEFINED, 0);
+    memoryp_t memory = createNewMemory(0, 0, MAXINF), queue = createNewMemory(UNDEFINED, UNDEFINED, 0);//記憶體、隊列開頭 queue->timeLeft 用來計加入隊列次數
     memoryp_t queueEnd = queue, now, temp;
     memory->next = createNewMemory(m, MAXINF, MAXINF);// memory 結尾
 
