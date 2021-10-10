@@ -109,7 +109,7 @@ int main() {
     }
 
     printf("%d\n%d\n", lastime - 1, queue->timeLeft);// 輸出所花時間、排入隊列次數
-	return 0;
+    return 0;
 }
 
 
