@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAXINF 0x7fffffff
+#define UNDEFINED -1
 
 typedef struct memory_s{
     int address, size, timeLeft;// 開始地址、記憶體大小、剩餘時間
@@ -78,7 +79,7 @@ void putmem(memoryp_t inser, int lastime){// debug 用輸出檢視
 int main() {
     int nowt, m, p, lastime = 0;
     scanf("%d", &m);
-    memoryp_t memory = createNewMemory(0, 0, MAXINF), queue = createNewMemory(-1, -1, 0);
+    memoryp_t memory = createNewMemory(0, 0, MAXINF), queue = createNewMemory(UNDEFINED, UNDEFINED, 0);
     memoryp_t queueEnd = queue, now, temp;
     memory->next = createNewMemory(m, MAXINF, MAXINF);// memory 結尾
 
