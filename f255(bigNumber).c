@@ -1,4 +1,4 @@
-#include <stdio.h>//#0: 1% AC (1.3s, 13.4MB) #1: 99% TLE (0.8s)
+#include <stdio.h>//AC (0.5s, 13.4MB)
 #include <string.h>
 #define MAXINPUT 10001
 #define MOD 1000000000000000000
@@ -13,7 +13,7 @@ typedef struct bigNum_s{
 }bigNum_t;
 
 bigNum_t list[MAXINPUT], tmp, *t = list;
-char buf[NUMDIGIT + 1], out[65536], *op = out, *end = out + 62436;
+char buf[NUMDIGIT + 1], out[65536], *op = out, *max = out + 62436;
 
 static inline char readChar(){
     static char buf[BUFSIZE], *temp = buf + BUFSIZE, *end = buf + BUFSIZE;
@@ -64,7 +64,7 @@ static inline void initial(){
 static inline void putLLUint(register unsigned long long int src){
     register char *p = buf + NUMDIGIT - 1;
     while(src){
-        *p-- = '0' ^ (src % 10);
+        *p-- = '0' | (src % 10);
         src /= 10;
     }
     while(*++p)
@@ -72,11 +72,14 @@ static inline void putLLUint(register unsigned long long int src){
 }
 
 static inline void putDLLUint(register unsigned long long int src){
-    register unsigned long long int div = MOD / 10;
-    for(; div; div /= 10){
-        *op++ = '0' | (src / div);
-        src %= div;
+    register int digit = NUMDIGIT;
+    register char *p = buf + NUMDIGIT - 1;
+    while(digit--){
+        *p-- = '0' | (src % 10);
+        src /= 10;
     }
+    while(*++p)
+        *op++ = *p;
 }
 
 int main() {
@@ -89,7 +92,7 @@ int main() {
         while(len)
             putDLLUint(t->num[--len]);
         *op++ = '\n';
-        if(op > end){
+        if(op > max){
             *op = '\0';
             fputs(out, stdout);
             op = out;
