@@ -1,5 +1,5 @@
 #include <stdio.h>//AC (0.5s, 13.4MB)
-#include <string.h>
+#include <string.h>//#include <memory.h>
 #define MAXINPUT 10001
 #define MOD 1000000000000000000
 #define NUMDIGIT 18
@@ -13,7 +13,7 @@ typedef struct bigNum_s{
 }bigNum_t;
 
 bigNum_t list[MAXINPUT], tmp, *t = list;
-char buf[NUMDIGIT + 1], out[65536], *op = out, *max = out + 62436;
+char LLUbuf[NUMDIGIT + 1], out[65536], *op = out, *max = out + 62436;
 
 static inline char readChar(){
     static char buf[BUFSIZE], *temp = buf + BUFSIZE, *end = buf + BUFSIZE;
@@ -37,7 +37,7 @@ static inline char readUint(register int *input){
 }
 
 static inline void initial(){
-    buf[NUMDIGIT] = '\0';
+    LLUbuf[NUMDIGIT] = '\0';
     memset(list, 0, sizeof(bigNum_t));
     t = list;
     t->len = 1;
@@ -62,7 +62,7 @@ static inline void initial(){
 }
 
 static inline void putLLUint(register unsigned long long int src){
-    register char *p = buf + NUMDIGIT - 1;
+    register char *p = LLUbuf + NUMDIGIT - 1;
     while(src){
         *p-- = '0' | (src % 10);
         src /= 10;
@@ -73,7 +73,7 @@ static inline void putLLUint(register unsigned long long int src){
 
 static inline void putDLLUint(register unsigned long long int src){
     register int digit = NUMDIGIT;
-    register char *p = buf + NUMDIGIT - 1;
+    register char *p = LLUbuf + NUMDIGIT - 1;
     while(digit--){
         *p-- = '0' | (src % 10);
         src /= 10;
