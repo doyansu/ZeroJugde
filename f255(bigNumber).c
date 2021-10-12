@@ -36,6 +36,27 @@ static inline char readUint(register int *input){
     return 1;
 }
 
+static inline void putLLUint(register unsigned long long int src){
+    register char *p = LLUbuf + NUMDIGIT - 1;
+    while(src){
+        *p-- = '0' | (src % 10);
+        src /= 10;
+    }
+    while(*++p)
+        *op++ = *p;
+}
+
+static inline void putDLLUint(register unsigned long long int src){
+    register int digit = NUMDIGIT;
+    register char *p = LLUbuf + NUMDIGIT - 1;
+    while(digit--){
+        *p-- = '0' | (src % 10);
+        src /= 10;
+    }
+    while(*++p)
+        *op++ = *p;
+}
+
 static inline void initial(){
     LLUbuf[NUMDIGIT] = '\0';
     memset(list, 0, sizeof(bigNum_t));
@@ -59,27 +80,6 @@ static inline void initial(){
         }
         list[x] = tmp;
     }
-}
-
-static inline void putLLUint(register unsigned long long int src){
-    register char *p = LLUbuf + NUMDIGIT - 1;
-    while(src){
-        *p-- = '0' | (src % 10);
-        src /= 10;
-    }
-    while(*++p)
-        *op++ = *p;
-}
-
-static inline void putDLLUint(register unsigned long long int src){
-    register int digit = NUMDIGIT;
-    register char *p = LLUbuf + NUMDIGIT - 1;
-    while(digit--){
-        *p-- = '0' | (src % 10);
-        src /= 10;
-    }
-    while(*++p)
-        *op++ = *p;
 }
 
 int main() {

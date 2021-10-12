@@ -1,26 +1,126 @@
-/*
-大數用千萬進制做完乘法後再進位速度遠高於十億進制一邊乘一邊進位。
+#include <stdio.h>// 	AC (3.5s, 5.9MB)
+#include <memory.h>
+#define MOD 10000000
+#define NUMDIGIT 7
+#define BIGSIZE 72000
+#define BUFSIZE 1048576
 
-除法和取餘運算很久，改成用除法得到商後再將原數減去除法得到的商乘上一千萬，也就是將
 
-a = n / 10;
-b = n % 10;
+typedef struct bigNum_s{
+    int len;
+    unsigned long long int num[BIGSIZE];
+}bigNum_t;
 
-改成
+bigNum_t tmp, *t = &tmp, ans, base;;
+char LLUbuf[NUMDIGIT + 1], out[BUFSIZE], *op = out, *max = out + BUFSIZE - 60000;
 
-a = n / 10;
-b = n - (a * 10);
+static inline char readChar(){
+    static char buf[BUFSIZE], *temp = buf + BUFSIZE, *end = buf + BUFSIZE;
+    if(temp == end){
+        if(end < buf + BUFSIZE)
+            return EOF;
+        end = buf + fread(buf, 1, BUFSIZE, stdin);
+        temp = buf;
+    }
+    return *temp++;
+}
 
-不過 10 要改成 1000 萬
+static inline char readULLint(register unsigned long long int *input){
+    register char ch;
+    while((ch = readChar()) < '0')
+        if(ch == EOF) return 0;
+    *input = ch ^ '0';
+    while((ch = readChar()) >= '0')
+        *input = (*input << 3) + (*input << 1) + (ch ^ '0');
+    return 1;
+}
 
-乘法用左移運算加速
+static inline void putLLUint(register unsigned long long int src){
+    register char *p = LLUbuf + NUMDIGIT - 1;
+    while(src){
+        *p-- = '0' ^ (src % 10);
+        src /= 10;
+    }
+    while(*++p)
+        *op++ = *p;
+}
 
-用指標減少記憶體操作量
+static inline void putDLLUint(register unsigned long long int src){
+    register int digit = NUMDIGIT;
+    register char *p = LLUbuf + NUMDIGIT - 1;
+    while(digit--){
+        *p-- = '0' | (src % 10);
+        src /= 10;
+    }
+    while(*++p)
+        *op++ = *p;
+}
 
-輸入輸出優化
-*/
+static inline bigNum_t bigMul(bigNum_t a, bigNum_t b){
+    t = &tmp;
+    memset(t, 0, sizeof(bigNum_t));
+    t->len = a.len + b.len - 1;
+    unsigned long long carry;
+    for(int i = 0; i < a.len; i++){
+        if(a.num[i]){
+            for(int j = 0; j < b.len; j++){
+                if(b.num[j])
+                    t->num[i + j] += a.num[i] * b.num[j];
+            }
+        }
+    }
 
-#include <stdio.h>//	AC (7.7s, 428KB)
+    for(int i = 0; i < t->len; i++)
+        if(t->num[i] >= MOD){
+            carry = t->num[i] / MOD;
+            t->num[i] -= carry * MOD;
+            t->num[i + 1] += carry;
+            if(i + 1 == t->len)
+                t->len++;
+        }
+
+    return tmp;
+}
+
+static inline void fastPower(unsigned long long int b, unsigned long long int power){
+    memset(&ans, 0, sizeof(bigNum_t));
+    memset(&base, 0, sizeof(bigNum_t));
+    base.num[0] = b;
+    ans.num[0] = 1;
+    base.len = ans.len = 1;
+
+    for(;; power >>= 1){
+        if(power & 1){
+            ans = bigMul(ans, base);
+            if(power == 1)
+                break;
+        }
+        base = bigMul(base, base);
+    }
+
+    t = &ans;
+    int len = t->len;
+    putLLUint(t->num[--len]);
+    while(len)
+        putDLLUint(t->num[--len]);
+    *op++ = '\n';
+    if(op > max){
+        *op = '\0';
+        fputs(out, stdout);
+        op = out;
+    }
+}
+
+int main() {
+    unsigned long long int power, base;
+    while(readULLint(&base) && readULLint(&power) && base && power)
+        fastPower(base, power);
+    *op = '\0';
+    fputs(out, stdout);
+    return 0;
+}
+
+/*#include <stdio.h>//	AC (7.7s, 428KB)
 
 int main(){
     long int index, i;
@@ -43,7 +143,7 @@ int main(){
             printf("%013lld", result[i]);
         putchar('\n');
     }
-}
+}*/
 
 
 /*#include <stdio.h>//AC (8.2s, 416KB)
